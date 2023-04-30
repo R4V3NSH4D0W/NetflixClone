@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Movie from './Movie'
 import {MdChevronLeft,MdChevronRight} from 'react-icons/md'
+
 const Row = ({title, fetchURL, rowID}) => {
     const [movies, setMovie] =useState([])
     useEffect(()=>{
@@ -28,6 +29,7 @@ const slideRight=()=>{
             <Movie key={id} item={item} />
           ))}
         </div>
+    
         <MdChevronRight onClick={slideRight} className='bg-white right-0 rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block' size={40}  />
       </div>
     </>
