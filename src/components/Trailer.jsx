@@ -30,19 +30,20 @@ const Trailer = ({id}) => {
     }
 
     return (
-      <div className="my-4">
+        <div className="my-4">
         <iframe
-          className="mx-auto mb-8 md:w-[460px] md:h-[300px] lg:w-[560px] lg:h-[315px] xl:w-[720px] xl:h-[405px]"
+          className="mx-auto md:w-[550px] md:h-[450px] lg:w-[760px] lg:h-[450px] xl:w-[820px] xl:h-[450px] w-full h-[50vh] md:m-auto"
           src={`https://www.youtube.com/embed/${trailer}`}
           title="Movie Trailer"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
       </div>
+      
+      
     );
   };
 
-  // render movie details and trailer
   return (
     <div className="container mx-auto px-4">
      

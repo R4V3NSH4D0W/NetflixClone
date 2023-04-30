@@ -1,9 +1,12 @@
 import React from 'react'
-import { Link ,useNavigate} from 'react-router-dom'
+import { Link ,useNavigate,useLocation} from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
+import Searchbar from './Searchbar'
+import { FaSearch } from 'react-icons/fa';
 const Navbar = () => {
   const {user, logOut}=UserAuth()
   const navigate=useNavigate()
+  const {pathname}=useLocation()
   const handelLogout =async()=>{
     try{
       await logOut();
@@ -18,7 +21,13 @@ const Navbar = () => {
          <h1 className=' text-red-600 text-4xl font-bold cursor-pointer'>NETFLIX</h1>
    
       </Link>
-   {user?.email ?    <div>
+    
+   {user?.email ?    <div className='flex justify-start items-center'>
+   {pathname !== "/search" && (
+        <Link to="/search">
+          <FaSearch className="cursor-pointer text-white mr-4 transition-transform duration-300 hover:transform hover:scale-125" />
+        </Link>
+      )}
        <Link to='/account'>
        <button className=' text-white pr-4'>Account</button>
        </Link>
@@ -27,7 +36,12 @@ const Navbar = () => {
   
      
     </div> :
-       <div>
+       <div className='flex justify-start items-center'>
+        {pathname !== "/search" && (
+        <Link to="/search">
+          <FaSearch className="cursor-pointer text-white mr-4 transition-transform duration-300 hover:transform hover:scale-125" />
+        </Link>
+      )}
        <Link to='/login'>
        <button className=' text-white pr-4'>Sign In</button>
        </Link>

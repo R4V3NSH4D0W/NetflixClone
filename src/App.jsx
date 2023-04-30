@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import Account from './pages/Account'
 import ProtectedRoute from './components/ProtectedRoute'
 import InfoModel from './components/InfoModel'
+import Searchbar from './components/Searchbar'
 const App = () => {
   return (
   <>
@@ -19,6 +20,7 @@ const App = () => {
     <Route path='/signup' element={<Signup/>}/>
     <Route path='/account' element={<ProtectedRoute><Account/></ProtectedRoute>}/>
     <Route path='/info/:id' element={<InfoModel/>}/>
+    <Route path='/search' element={<Searchbar/>}/>
    </Routes>
   </AuthContextProvider>
   
