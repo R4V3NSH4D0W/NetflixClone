@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Genres from './Genres';
 
 const Searchbar = () => {
   const [query, setQuery] = useState('');
   const [results,setResults]=useState([])
-
+  const [genreID, setGenreID] = useState('');
   const handelSubmit =async(event)=>{
     event.preventDefault();
     try{
@@ -16,11 +17,36 @@ const Searchbar = () => {
         console.log(error)
     }
   }
-
   const handleInputChange = (event) => {
     setQuery(event.target.value);
   };
 
+//fetch genres
+useEffect(() => {
+  const params = new URLSearchParams(location.search);
+  const genreId = params.get('genre');
+  setGenreID(genreId);
+}, [location.search]);
+
+useEffect(() => {
+  async function fetchData() {
+    try {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/discover/movie?api_key=264eebac5b8050acaf8f7989149f23ec&with_genres=${genreID}&sort_by=vote_average.desc&vote_count.gte=1000&include_adult=false&include_video=false&page=1&limit=20`
+      );
+      setResults(response.data.results);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  if (genreID) {
+    fetchData();
+  }
+}, [genreID]);
+
+const handleGenreClick = (genreId) => {
+  setGenreID(genreId);
+};
   return (
     <>
   <div className='relative'>
@@ -41,7 +67,8 @@ const Searchbar = () => {
     </form>
   </div>
 </div>
-<div class="mx-7 sm:mx-5 md:mx-10 lg:mx-15 mt-5">
+<Genres onClick={handleGenreClick} />
+<div className="mx-7 sm:mx-5 md:mx-10 lg:mx-15 mt-5">
    {results.map((movie, index) => (
   <div className='w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2' key={index}>
     <img className='w-full h-auto block' src={`https://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`} alt={movie?.title}/>
